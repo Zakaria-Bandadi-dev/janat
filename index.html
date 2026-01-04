@@ -541,29 +541,42 @@
             position: relative;
         }
 
-        .more-products-icon {
-            position: absolute;
-            top: 10px;
-            right: 10px;
+        .more-products-float {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
             background: var(--gold);
             color: var(--white-cream);
-            width: 30px;
-            height: 30px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            animation: bounce 2s infinite;
+            z-index: 100;
             transition: var(--transition-smooth);
-            opacity: 0.8;
-            z-index: 10;
         }
 
-        .more-products-icon:hover {
-            opacity: 1;
-            transform: scale(1.1);
+        .more-products-float:hover {
             background: var(--terracotta);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(-50%) translateY(0);
+            }
+            40% {
+                transform: translateY(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateY(-50%) translateY(-5px);
+            }
         }
 
         .product-image img {
@@ -2101,6 +2114,7 @@
                 <img src="images/premium-dates-2.png" alt="Premium Dried Dates" />
             </div>
         </div>
+        <div class="more-products-float" title="منتجات أخرى">➕</div>
     </section>
 
     <!-- CATEGORIES SECTION -->
@@ -2157,7 +2171,6 @@
             <div class="product-card">
                 <div class="product-image">
                     <img src="images/premium-dates-2.png" alt="Premium Dates" />
-                    <div class="more-products-icon" title="منتجات أخرى">➕</div>
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">Premium Dates</h3>
@@ -2174,7 +2187,6 @@
             <div class="product-card">
                 <div class="product-image">
                     <img src="images/dried-fruits-mix-3.jpg" alt="Dried Fruits Mix" />
-                    <div class="more-products-icon" title="منتجات أخرى">➕</div>
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">Fruits Mix</h3>
@@ -2191,7 +2203,6 @@
             <div class="product-card">
                 <div class="product-image">
                     <img src="images/dates-almonds-1.jpg" alt="Dates with Almonds" />
-                    <div class="more-products-icon" title="منتجات أخرى">➕</div>
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">Dates & Almonds</h3>
@@ -2208,7 +2219,6 @@
             <div class="product-card">
                 <div class="product-image">
                     <img src="images/premium-nuts-mix-4.jpg" alt="Premium Nuts Mix" />
-                    <div class="more-products-icon" title="منتجات أخرى">➕</div>
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">Nuts Premium</h3>
@@ -2225,7 +2235,6 @@
             <div class="product-card">
                 <div class="product-image">
                     <img src="images/figs-nuts-5.jpg" alt="Figs Mix" />
-                    <div class="more-products-icon" title="منتجات أخرى">➕</div>
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">Figs Selection</h3>
@@ -2242,7 +2251,6 @@
             <div class="product-card">
                 <div class="product-image">
                     <img src="images/dried-figs-dates-6.jpg" alt="Dried Figs & Dates" />
-                    <div class="more-products-icon" title="منتجات أخرى">➕</div>
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">Figs & Dates</h3>
@@ -2623,10 +2631,6 @@
         // Open modal when clicking on product card or button
         document.querySelectorAll('.product-card, .product-btn').forEach(element => {
             element.addEventListener('click', function(e) {
-                if (e.target.closest('.more-products-icon')) {
-                    window.location.href = 'products.html';
-                    return;
-                }
                 e.preventDefault();
 
                 currentProductCard = this.classList.contains('product-card') ? this : this.closest('.product-card');
@@ -2760,6 +2764,11 @@
 
             cartTotal.textContent = `${total} DH`;
         }
+
+        // More products float icon
+        document.querySelector('.more-products-float').addEventListener('click', function() {
+            window.location.href = 'products.html';
+        });
 
         // Cart panel functionality
         const cartPanel = document.getElementById('cartPanel');
